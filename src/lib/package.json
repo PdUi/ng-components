@@ -1,0 +1,21 @@
+{
+  "name": "pd-ui-ng",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "url"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "main": "./bundles/pd-ui-ng.umd.js",
+  "es2015": "./esm2015/pd-ui-ng.js",
+  "module": "./esm5/pd-ui-ng.es5.js",
+  "typings": "./pd-ui-ng.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^5.0.0",
+    "@angular/common": "^5.0.0",
+    "@angular/http": "^5.0.0"
+  }
+}
