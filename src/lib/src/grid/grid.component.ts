@@ -1,4 +1,9 @@
-import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  Renderer2
+} from '@angular/core';
 
 import { IColumnDefinition } from './column-definition';
 
@@ -13,17 +18,31 @@ import { IColumnDefinition } from './column-definition';
     </div>
     <ng-container *ngFor="let record of records">
       <div *ngFor="let columnDefinition of columnDefinitions" role="gridcell">
-        {{columnDefinition.content(record)}}
+        <ng-container
+          *ngIf="columnDefinition.template"
+          [ngTemplateOutlet]="columnDefinition.template"
+          [ngTemplateOutletContext]="{ $implicit: record }">
+        </ng-container>
+        <ng-container *ngIf="columnDefinition.content">
+          {{columnDefinition.content(record)}}
+        </ng-container>
+        <ng-container *ngIf="columnDefinition.propertyName">
+          {{record[columnDefinition.propertyName]}}
+        </ng-container>
       </div>
     </ng-container>
   `,
   styles: [`
+    :host {
+      display: grid;
+      width: 100%;
+    }
   `],
   preserveWhitespaces: false
 })
 export class GridComponent {
   private _records: any[];
-  private _columnDefinitions: IColumnDefinition[];
+  private _columnDefinitions: IColumnDefinition<any>[];
 
   @Input() get records(): any[] {
     return this._records;
@@ -33,10 +52,10 @@ export class GridComponent {
     this.update();
   }
 
-  @Input() get columnDefinitions(): IColumnDefinition[] {
+  @Input() get columnDefinitions(): IColumnDefinition<any>[] {
     return this._columnDefinitions;
   }
-  set columnDefinitions(columnDefinitions: IColumnDefinition[]) {
+  set columnDefinitions(columnDefinitions: IColumnDefinition<any>[]) {
     this._columnDefinitions = columnDefinitions;
     this.update();
   }
@@ -45,10 +64,8 @@ export class GridComponent {
 
   update() {
     if (this.columnDefinitions && this.columnDefinitions.length) {
-      this.renderer.setStyle(this.element.nativeElement, 'role', 'grid');
+      this.renderer.setAttribute(this.element.nativeElement, 'role', 'grid');
       this.renderer.setStyle(this.element.nativeElement, 'grid-template-columns', `repeat(${this.columnDefinitions.length}, auto)`);
-      this.renderer.setStyle(this.element.nativeElement, 'width', '100%');
-      this.renderer.setStyle(this.element.nativeElement, 'display', 'grid');
     }
   }
 }
