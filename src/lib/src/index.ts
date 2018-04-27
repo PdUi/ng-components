@@ -1,4 +1,2 @@
-export * from './sample.module';
-export * from './sample.component';
-export * from './sample.service';
-export * from './sample.module';
+export * from './grid';
+export * from './pd-ui-ng.module';
