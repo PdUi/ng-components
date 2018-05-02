@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { PdUiNgModule } from '../lib/index';
+import { PdUiNgModule } from '../lib';
 
 import { AppComponent } from './app.component';
 import { WindowComponent } from './window.component';

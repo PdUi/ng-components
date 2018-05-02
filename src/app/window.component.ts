@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 enum DisplayOrientation {
@@ -19,7 +19,7 @@ enum DisplayOrientation {
     }
   `]
 })
-export class WindowComponent implements AfterViewInit {
+export class WindowComponent {
   desktopWidthOptions = this.range(992, 2000);
   tabletWidthOptions = this.range(768, 991);
   mobileWidthOptions = this.range(300, 767);
@@ -38,10 +38,6 @@ export class WindowComponent implements AfterViewInit {
 
   url(): SafeUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(this.src);
-  }
-
-  ngAfterViewInit() {
-
   }
 
   private range(start: number, end: number): number[] {
