@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { WindowComponent } from './window.component';
+
 import {
   GridComponent
 } from './examples';
@@ -12,7 +14,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'grid',
+    component: WindowComponent,
     pathMatch: 'full'
   }
 ];

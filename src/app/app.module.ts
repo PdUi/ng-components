@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { PdUiNgModule } from '../lib/index';
 
 import { AppComponent } from './app.component';
-
+import { WindowComponent } from './window.component';
 import * as ExampleComponents from './examples';
 
 import { routes } from './app.routes';
@@ -13,7 +13,8 @@ import { routes } from './app.routes';
 @NgModule({
   declarations: [
     AppComponent,
-    ExampleComponents.GridComponent
+    ExampleComponents.GridComponent,
+    WindowComponent
   ],
   imports: [
     BrowserModule,
