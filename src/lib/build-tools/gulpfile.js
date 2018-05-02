@@ -46,6 +46,7 @@ gulp.task('build', function(cb) {
     'rollup',
     'release',
     'polish',
+    'copy:styles:src',
     function(err) {
       if (err) {
         chalk.red(`ERROR: ${err.message}`);
@@ -206,6 +207,12 @@ gulp.task('polish:move:release', () => {
 
 gulp.task('polish:clean:release', () => {
   return del([path.join(distDir, releaseDirName)]);
+});
+
+gulp.task('copy:styles:src', () => {
+  return gulp
+    .src(path.join(libDir, '**/*.scss'))
+    .pipe(gulp.dest(distDir));
 });
 
 gulp.task('default', ['build']);
