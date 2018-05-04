@@ -8,9 +8,12 @@ import {
   TemplateRef
 } from '@angular/core';
 
+import { IAction } from './action';
+import { ICellDefinition } from './cell-definition';
 import { IColumnHeaderDefinition } from './column-header-definition';
 import { IRowDefinition } from './row-definition';
-import { IAction } from './action';
+import { IGridAction } from './grid-action';
+import { GridActionType } from './grid-action-type';
 
 import { DisplayStrategyType } from './display-strategy';
 
@@ -33,8 +36,7 @@ import { DisplayStrategyType } from './display-strategy';
 
         <ng-container
           *ngFor="let action of columnHeaderDefinition.actions"
-          [ngSwitch]="action.displayStrategy.displayStrategyType"
-          (click)="act(action, columnHeaderDefinition)">
+          [ngSwitch]="action.displayStrategy.displayStrategyType">
             <ng-container
               *ngSwitchCase="DisplayStrategyType.Template"
               [ngTemplateOutlet]="action.displayStrategy.content"
@@ -49,17 +51,18 @@ import { DisplayStrategyType } from './display-strategy';
       <div
         *ngFor="let cellDefinition of _rowDefinition.cellDefinitions"
         role="gridcell"
-        [ngSwitch]="cellDefinition.displayStrategyType">
+        [ngSwitch]="cellDefinition.displayStrategy.displayStrategyType"
+        (click)="cellClicked(cellDefinition, record)">
         <ng-container
           *ngSwitchCase="DisplayStrategyType.Template"
-          [ngTemplateOutlet]="cellDefinition.content"
+          [ngTemplateOutlet]="cellDefinition.displayStrategy.content"
           [ngTemplateOutletContext]="{ $implicit: record }">
         </ng-container>
         <ng-container *ngSwitchCase="DisplayStrategyType.FunctionTransform">
-          {{cellDefinition.content(record)}}
+          {{cellDefinition.displayStrategy.content(record)}}
         </ng-container>
         <ng-container *ngSwitchCase="DisplayStrategyType.String">
-          {{record[cellDefinition.content]}}
+          {{record[cellDefinition.displayStrategy.content]}}
         </ng-container>
       </div>
     </ng-container>
@@ -100,7 +103,7 @@ export class GridComponent<T> {
     this.update();
   }
 
-  @Output() emitter = new EventEmitter();
+  @Output() emitter = new EventEmitter<IGridAction<T>>();
 
   constructor(private element: ElementRef, private renderer: Renderer2) {}
 
@@ -120,10 +123,16 @@ export class GridComponent<T> {
 
   act(action: IAction, columnHeaderDefinition: IColumnHeaderDefinition, data: any) {
     if (!action.action) {
-      this.emitter.emit({ action, columnHeaderDefinition, data });
+      this.emitter.emit({ type: GridActionType.UserDefined, data: { data, action }, columnHeaderDefinition: columnHeaderDefinition });
     } else {
       // TODO: implement perform action
       console.log('TODO: implement perform action');
+    }
+  }
+
+  cellClicked(cellDefinition: ICellDefinition<T>, record: T) {
+    if (!!cellDefinition.shouldEmitOnClick) {
+      this.emitter.emit({ type: GridActionType.CellClicked, record: record });
     }
   }
 }

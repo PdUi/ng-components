@@ -1,5 +1,5 @@
-import { ObjectPropertyDisplayStrategy } from './display-strategy';
+import { ICellDefinition } from './cell-definition';
 
 export interface IRowDefinition<T> {
-  cellDefinitions: ObjectPropertyDisplayStrategy<T>[];
+  cellDefinitions: ICellDefinition<T>[];
 }

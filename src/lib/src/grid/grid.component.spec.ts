@@ -65,7 +65,7 @@ describe('GridComponent', () => {
   });
 
   it('should create a gridcell', () => {
-    component.rowDefinition = { cellDefinitions: [new ObjectPropertyDisplayStrategy<TestObject>('id')] };
+    component.rowDefinition = { cellDefinitions: [{ displayStrategy: new ObjectPropertyDisplayStrategy<TestObject>('id') }] };
     component.records = [new TestObject(1, 'test object')];
     fixture.detectChanges();
     const cells = fixture.nativeElement.querySelectorAll('[role="gridcell"]');
@@ -73,7 +73,7 @@ describe('GridComponent', () => {
   });
 
   it('should create a gridcell with text from property', () => {
-    component.rowDefinition = { cellDefinitions: [new ObjectPropertyDisplayStrategy<TestObject>('id')] };
+    component.rowDefinition = { cellDefinitions: [{ displayStrategy: new ObjectPropertyDisplayStrategy<TestObject>('id') }] };
     component.records = [new TestObject(1, 'test object')];
     fixture.detectChanges();
     const cell = fixture.nativeElement.querySelector('[role="gridcell"]');
@@ -81,7 +81,11 @@ describe('GridComponent', () => {
   });
 
   it('should create a gridcell with function return value', () => {
-    component.rowDefinition = { cellDefinitions: [new ObjectPropertyDisplayStrategy<TestObject>((obj) => `${obj.description2}, ${obj.description1}`)] };
+    component.rowDefinition = {
+      cellDefinitions: [
+        { displayStrategy: new ObjectPropertyDisplayStrategy<TestObject>((obj) => `${obj.description2}, ${obj.description1}`) }
+      ]
+    };
     component.records = [new TestObject(1, 'test object', 'hello world')];
     fixture.detectChanges();
     const cell = fixture.nativeElement.querySelector('[role="gridcell"]');

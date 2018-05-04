@@ -75,16 +75,20 @@ export class GridComponent implements AfterContentInit {
   ngAfterContentInit() {
     this.rowDefinition = {
       cellDefinitions: [
-        new ObjectPropertyDisplayStrategy<IPerson>('id'),
-        new ObjectPropertyDisplayStrategy<IPerson>(this.firstNameTemplate),
-        new ObjectPropertyDisplayStrategy<IPerson>('city'),
-        new ObjectPropertyDisplayStrategy<IPerson>((record) => record.createdDate.toDateString())
+        { displayStrategy: new ObjectPropertyDisplayStrategy<IPerson>('id') },
+        { displayStrategy: new ObjectPropertyDisplayStrategy<IPerson>(this.firstNameTemplate), shouldEmitOnClick: true },
+        { displayStrategy: new ObjectPropertyDisplayStrategy<IPerson>('city') },
+        { displayStrategy: new ObjectPropertyDisplayStrategy<IPerson>((record) => record.createdDate.toDateString()) }
       ]
     };
     this.columnHeaderDefinitions = [
       { displayStrategy: new DisplayStrategy('Id') },
       { displayStrategy: new DisplayStrategy(this.firstNameHeaderTemplate), title: 'Name' },
-      { displayStrategy: new DisplayStrategy('City'), title: 'City', actions: [{ type: 'sort', displayStrategy: new DisplayStrategy(this.sortIndicatorHeaderTemplate) }] },
+      {
+          displayStrategy: new DisplayStrategy('City'),
+          title: 'City',
+          actions: [{ type: 'sort', displayStrategy: new DisplayStrategy(this.sortIndicatorHeaderTemplate) }]
+      },
       { displayStrategy: new DisplayStrategy(this.starHeaderTemplate), title: 'Like' }
     ];
   }
