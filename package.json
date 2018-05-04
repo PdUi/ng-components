@@ -3,12 +3,14 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve",
+    "prebuild": "npm run lint",
     "build": "ng build --prod",
     "test": "ng test",
+    "test:ci": "ng test --single-run",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "prebuild:lib": "npm run lint",
     "build:lib": "gulp --gulpfile gulpfile.lib.js",
     "version": "sync-json -v --property version --source package.json src/lib/package.json"
   },
@@ -62,6 +64,7 @@
     "ng-lib-schematics": "^0.3.0",
     "path": "^0.12.7",
     "protractor": "~5.1.2",
+    "puppeteer": "^1.3.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.54.0",
     "run-sequence": "^2.2.1",
