@@ -14,8 +14,8 @@
   "module": "./esm5/pd-ui-ng.es5.js",
   "typings": "./pd-ui-ng.d.ts",
   "peerDependencies": {
-    "@angular/core": "^5.0.0",
-    "@angular/common": "^5.0.0",
-    "@angular/http": "^5.0.0"
+    "@angular/core": "^6.0.0",
+    "@angular/common": "^6.0.0",
+    "@angular/http": "^6.0.0"
   }
 }
