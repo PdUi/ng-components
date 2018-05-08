@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve",
+    "start:prod": "ng serve --prod",
     "prebuild": "npm run lint",
     "build": "ng build --prod",
     "test": "ng test",

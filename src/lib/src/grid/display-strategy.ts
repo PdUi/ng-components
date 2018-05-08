@@ -30,7 +30,9 @@ function setDisplayStrategyType(
   displayStrategy: { displayStrategyType: DisplayStrategyType },
   content: TemplateRef<any> | ((record: any) => string) | string
 ) {
-  if (Object.getPrototypeOf(content).constructor.name === 'TemplateRef_') {
+  const templateRefPrototype = Object.getPrototypeOf(Object.create(TemplateRef));
+  const templateRefInstance = new templateRefPrototype();
+  if (Object.getPrototypeOf(Object.getPrototypeOf(content)).constructor.name === templateRefInstance.constructor.name) {
     displayStrategy.displayStrategyType = DisplayStrategyType.Template;
     return;
   }
