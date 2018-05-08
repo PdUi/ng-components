@@ -30,20 +30,12 @@ function setDisplayStrategyType(
   displayStrategy: { displayStrategyType: DisplayStrategyType },
   content: TemplateRef<any> | ((record: any) => string) | string
 ) {
-  const templateRefPrototype = Object.getPrototypeOf(Object.create(TemplateRef));
-  const templateRefInstance = new templateRefPrototype();
-  if (Object.getPrototypeOf(Object.getPrototypeOf(content)).constructor.name === templateRefInstance.constructor.name) {
+  // https://stackoverflow.com/questions/50237478/how-can-one-determine-if-an-object-is-a-viewref
+  if (content instanceof TemplateRef) {
     displayStrategy.displayStrategyType = DisplayStrategyType.Template;
-    return;
-  }
-
-  switch (typeof content) {
-    case typeof Function:
+  } else if (content instanceof Function) {
     displayStrategy.displayStrategyType = DisplayStrategyType.FunctionTransform;
-      break;
-    case typeof String:
-    default:
+  } else {
     displayStrategy.displayStrategyType = DisplayStrategyType.String;
-      break;
   }
 }
